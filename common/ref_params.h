@@ -15,6 +15,8 @@
 #if !defined( REF_PARAMSH )
 #define REF_PARAMSH
 
+#include "usercmd.h"
+
 typedef struct ref_params_s
 {
 	// Output
@@ -60,16 +62,25 @@ typedef struct ref_params_s
 	int		smoothing;
 
 	// Last issued usercmd
-	struct usercmd_s *cmd;
+	struct usercmd_s* cmd;
 
 	// Movevars
-	struct movevars_s *movevars;
+	struct movevars_s* movevars;
 
 	int		viewport[4];		// the viewport coordinates x ,y , width, height
 
 	int		nextView;			// the renderer calls ClientDLL_CalcRefdef() and Renderview
 								// so long in cycles until this value is 0 (multiple views)
 	int		onlyClientDraw;		// if !=0 nothing is drawn by the engine except clientDraw functions
+
+	// Sven Co-op extension (used by the client mirror/portal renderer)
+	// When rendering a mirror/portal the virtual camera (vieworg) sits behind the
+	// mirror plane, i.e. inside solid geometry, so it cannot be used to determine
+	// the visible leaf/PVS. pvsOrigin holds a point on the visible side of the
+	// portal surface; the engine computes r_viewleaf from it instead of vieworg
+	// when pvsOverride is non-zero
+	int		pvsOverride;		// if !=0, use pvsOrigin (not vieworg) for PVS/leaf/water
+	float	pvsOrigin[3];		// world-space origin used for PVS/leaf determination
 } ref_params_t;
 
 #endif // !REF_PARAMSH
