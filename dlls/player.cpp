@@ -48,6 +48,7 @@
 #include "user_messages.h"
 #include "CServer.h"
 #include "server_support.h"
+#include "server_sound.h"
 #include "client_commands.h"
 #include "AdminLevel.h"
 #include "ConCommandDefs.h"
@@ -602,7 +603,7 @@ void CBasePlayer::PackDeadPlayerItems( void )
 	int weaponRules = g_pGameRules->DeadPlayerWeapons( this );
 	int ammoRules = g_pGameRules->DeadPlayerAmmo( this );
 
-	if ( (int) CVAR_GET_FLOAT( "mp_dropweapons" ) < 1 )
+	if ( !CanDropPlayerItem( NULL ) )
 		return;
 
 	if ( weaponRules != GR_PLR_DROP_GUN_NO )
@@ -2487,11 +2488,8 @@ void CBasePlayer::CheckSuitUpdate()
 	// if in range of radiation source, ping geiger counter
 	UpdateGeigerCounter();
 
-	if ( g_pGameRules->IsMultiplayer() )
-	{
-		// don't bother updating HEV voice in multiplayer.
+	if ( mp_hevsuit_voice.value == 0 )
 		return;
-	}
 
 	if ( gpGlobals->time >= m_flSuitUpdate && m_flSuitUpdate > 0)
 	{
@@ -2512,10 +2510,15 @@ void CBasePlayer::CheckSuitUpdate()
 			{
 				// play sentence number
 
-				char sentence[CBSENTENCENAME_MAX+1];
-				strcpy(sentence, "!");
-				strcat(sentence, gszallsentencenames[isentence]);
-				EMIT_SOUND_SUIT(ENT(pev), sentence);
+				const char *name = CServer_SoundEngine::GetSoundEngine()->LookupSentenceName( isentence );
+
+				if ( name )
+				{
+					char sentence[MAX_SENTENCE_NAME + 1];
+					strcpy( sentence, "!" );
+					strcat( sentence, name );
+					EMIT_SOUND_SUIT( ENT(pev), sentence );
+				}
 			}
 			else
 			{
@@ -2531,7 +2534,7 @@ void CBasePlayer::CheckSuitUpdate()
 }
  
 // add sentence to suit playlist queue. if fgroup is true, then
-// name is a sentence group (HEV_AA), otherwise name is a specific
+// name is a sentence group (!HEV_AA), otherwise name is a specific
 // sentence name ie: !HEV_AA0.  If iNoRepeat is specified in
 // seconds, then we won't repeat playback of this word or sentence
 // for at least that number of seconds.
@@ -2547,11 +2550,8 @@ void CBasePlayer::SetSuitUpdate(const char *name, int fgroup, int iNoRepeatTime)
 	if ( !(pev->weapons & (1<<WEAPON_SUIT)) )
 		return;
 
-	if ( g_pGameRules->IsMultiplayer() )
-	{
-		// due to static channel design, etc. We don't play HEV sounds in multiplayer right now.
+	if ( mp_hevsuit_voice.value == 0 )
 		return;
-	}
 
 	// if name == NULL, then clear out the queue
 
@@ -2564,13 +2564,13 @@ void CBasePlayer::SetSuitUpdate(const char *name, int fgroup, int iNoRepeatTime)
 	// get sentence or group number
 	if (!fgroup)
 	{
-		isentence = SENTENCEG_Lookup(name, NULL);
+		isentence = CServer_SoundEngine::GetSoundEngine()->LookupSentenceIndex( (char *) name + 1 );
 		if (isentence < 0)
 			return;
 	}
 	else
 		// mark group number as negative
-		isentence = -SENTENCEG_GetIndex(name);
+		isentence = -CServer_SoundEngine::GetSoundEngine()->LookupSentenceGroupIndex( name + 1 );
 
 	// check norepeat list - this list lets us cancel
 	// the playback of words or sentences that have already

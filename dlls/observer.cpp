@@ -447,11 +447,7 @@ void CObserver::StartObserver( const Vector &position, const Vector &angles, boo
 	if ( m_hPlayer->m_hVehicle )
 		( (CAdvFuncVehicle *) (CBaseEntity *) m_hPlayer->m_hVehicle )->PlayerExit( m_hPlayer, true );
 
-	if ( ( m_hPlayer->pev->weapons & ( 1 << WEAPON_SUIT ) ) && mp_hevsuit_voice.value != 0 )
-	{
-		for ( int index = 0; index < CSUITPLAYLIST; ++index )
-			m_hPlayer->m_rgSuitPlayList[index] = 0;
-	}
+	m_hPlayer->SetSuitUpdate( NULL, FALSE, 0 );
 
 	m_hPlayer->SendNoCurrentWeapon();
 	m_hPlayer->m_iClientFOV = 0;
@@ -537,7 +533,7 @@ void CObserver::StopObserver( bool respawn )
 void CObserver::Think( void )
 {
 	if ( ( m_hPlayer->pev->iuser1 == OBS_CHASE_LOCKED || m_hPlayer->pev->iuser1 == OBS_CHASE_FREE )
-		&& m_hObserverTarget && m_hObserverTarget->IsAlive() )
+		&& m_hObserverTarget && m_hObserverTarget->IsAlive() && m_hObserverTarget->IsConnected() )
 	{
 		Vector distance = m_hObserverTarget->pev->origin - m_hPlayer->pev->origin;
 
