@@ -275,17 +275,6 @@ int TrainSpeed(int iSpeed, int iMax)
 
 void CBasePlayer :: DeathSound( void )
 {
-	// water death sounds
-	/*
-	if (pev->waterlevel == 3)
-	{
-		EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/h2odeath.wav", 1, ATTN_NONE);
-		return;
-	}
-	*/
-
-	EMIT_SOUND(ENT(pev), CHAN_VOICE, "player/pain3.wav", 1, ATTN_NORM);
-
 	// play one of the suit death alarms
 	EMIT_GROUPNAME_SUIT(ENT(pev), "HEV_DEAD");
 }
