@@ -716,9 +716,9 @@ void CKingpin::DeflectStuff( void )
 		return;
 	}
 
-	Vector force = offset / distance * gpGlobals->frametime * 2000000.0f / max( distance, 10.0f );
+	Vector force = offset / distance * gpGlobals->frametime * 2000000.0f / V_max( distance, 10.0f );
 
-	force.z = max( force.z, 50.0f );
+	force.z = V_max( force.z, 50.0f );
 	target->pev->velocity = target->pev->velocity + force;
 	target->pev->flags &= ~FL_ONGROUND;
 
@@ -1301,7 +1301,7 @@ Vector KingpinBlastDirection( Vector direction )
 	}
 	else if ( vertical > 0.5f )
 	{
-		direction.z = max( direction.x, direction.y );
+		direction.z = V_max( direction.x, direction.y );
 		direction = direction.Normalize();
 	}
 

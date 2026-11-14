@@ -939,7 +939,7 @@ void CIchthyosaur::Move(float flInterval)
 	Vector delta = m_Route[m_iRouteIndex].vecLocation - pev->origin;
 	Vector direction = delta.Normalize();
 	float distance = delta.Length();
-	float checkDistance = min( distance, 200.0f );
+	float checkDistance = V_min( distance, 200.0f );
 	int routeType = m_Route[m_iRouteIndex].iType & ~bits_MF_NOT_TO_MASK;
 	CBaseEntity *target = NULL;
 

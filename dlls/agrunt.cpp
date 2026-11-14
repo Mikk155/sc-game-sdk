@@ -301,7 +301,7 @@ void CAGrunt :: PrescheduleThink ( void )
 				num = RANDOM_LONG(0,ARRAYSIZE(pIdleSounds)-1);
 			} while ( num == m_iLastWord && tries++ < 5 );
 
-			num = max( 0, min( num, (int) ARRAYSIZE( pIdleSounds ) - 1 ) );
+			num = V_max( 0, V_min( num, (int) ARRAYSIZE( pIdleSounds ) - 1 ) );
 			m_iLastWord = num;
 
 			// play a new sound
@@ -545,7 +545,7 @@ void CAGrunt :: HandleAnimEvent( MonsterEvent_t *pEvent )
 					pHurt->pev->flags &= ~FL_ONGROUND;
 
 					// heavier victims are pushed less
-					float flScale = 100 / max( pHurt->pev->max_health, 100.0f );
+					float flScale = 100 / V_max( pHurt->pev->max_health, 100.0f );
 					Vector vecForward, vecRight, vecUp;
 
 					AngleVectors( pev->angles, &vecForward, &vecRight, &vecUp );

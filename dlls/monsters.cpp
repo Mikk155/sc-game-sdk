@@ -3081,9 +3081,9 @@ void CBaseMonster::ApplyEffects( void )
 	else
 	{
 		pev->renderfx = kRenderFxGlowShell;
-		pev->rendercolor.x = min( m_vecEffectGlowColor.x, 255.0f );
-		pev->rendercolor.y = min( m_vecEffectGlowColor.y, 255.0f );
-		pev->rendercolor.z = min( m_vecEffectGlowColor.z, 255.0f );
+		pev->rendercolor.x = V_min( m_vecEffectGlowColor.x, 255.0f );
+		pev->rendercolor.y = V_min( m_vecEffectGlowColor.y, 255.0f );
+		pev->rendercolor.z = V_min( m_vecEffectGlowColor.z, 255.0f );
 	}
 
 	bool wasBlocked = ( pev->flags & FL_NOWEAPONS ) != 0;

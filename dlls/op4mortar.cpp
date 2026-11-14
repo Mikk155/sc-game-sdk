@@ -417,16 +417,16 @@ void COp4Mortar::UpdateControllers( void )
 		m_vecIdealAngles.x = 0;
 
 	if ( m_vecIdealAngles.x > m_vecController.x )
-		m_vecController.x = min( m_vecIdealAngles.x, m_vecController.x + 4 );
+		m_vecController.x = V_min( m_vecIdealAngles.x, m_vecController.x + 4 );
 
 	if ( m_vecController.x > m_vecIdealAngles.x )
-		m_vecController.x = max( m_vecIdealAngles.x, m_vecController.x - 4 );
+		m_vecController.x = V_max( m_vecIdealAngles.x, m_vecController.x - 4 );
 
 	if ( m_vecIdealAngles.y > m_vecController.y )
-		m_vecController.y = min( m_vecIdealAngles.y, m_vecController.y + 4 );
+		m_vecController.y = V_min( m_vecIdealAngles.y, m_vecController.y + 4 );
 
 	if ( m_vecController.y > m_vecIdealAngles.y )
-		m_vecController.y = max( m_vecIdealAngles.y, m_vecController.y - 4 );
+		m_vecController.y = V_max( m_vecIdealAngles.y, m_vecController.y - 4 );
 
 	SetBoneController( 1, m_vecController.y );
 	SetBoneController( 0, m_vecController.x );

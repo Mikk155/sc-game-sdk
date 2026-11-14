@@ -256,8 +256,8 @@ void CShockRoach::HandleAnimEvent( MonsterEvent_t *event )
 
 	if ( m_hEnemy != NULL )
 	{
-		float gravity = max( 1.0f, CVAR_GET_FLOAT( "sv_gravity" ) );
-		float height = max( 16.0f, m_hEnemy->pev->origin.z + m_hEnemy->pev->view_ofs.z - pev->origin.z );
+		float gravity = V_max( 1.0f, CVAR_GET_FLOAT( "sv_gravity" ) );
+		float height = V_max( 16.0f, m_hEnemy->pev->origin.z + m_hEnemy->pev->view_ofs.z - pev->origin.z );
 		float speed = sqrt( height * ( gravity + gravity ) );
 		float time = speed / gravity;
 

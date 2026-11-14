@@ -746,6 +746,6 @@ void CGonomeDead::KeyValue( KeyValueData *data )
 
 	unsigned int pose = strtoul( data->szValue, NULL, 10 );
 
-	m_iPose = min( pose, 3u );
+	m_iPose = V_min( pose, 3u );
 	data->fHandled = TRUE;
 }

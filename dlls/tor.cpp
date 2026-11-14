@@ -422,7 +422,7 @@ void CTor::PrescheduleThink( void )
 			break;
 	} while ( attempts++ < 5 );
 
-	m_iLastWord = max( 0, min( word, 2 ) );
+	m_iLastWord = V_max( 0, V_min( word, 2 ) );
 	EMIT_SOUND_DYN( edict(), CHAN_VOICE, pIdleSounds[m_iLastWord], 1, ATTN_NORM, 0, 100 );
 
 	if ( RANDOM_LONG( 1, 10 ) > 1 )

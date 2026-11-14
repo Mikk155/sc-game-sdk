@@ -3,8 +3,8 @@
 Reverse-engineered source code of Sven Co-op (5.26), current Steam build.
 
 This repository contains:
-- `client.dll` — client code (5.26)
-- `server.dll` — server code (5.26)
+- `client.dll/.so`
+- `server.dll/.so` (gamedll)
 
 ## Getting started
 
@@ -25,6 +25,15 @@ projects/vs2010/svencoop.sln
 ```
 
 Select `Win32` and `Debug` or `Release`, then build the solution.
+
+### Linux (Steam Runtime)
+
+Install Docker and make sure your user can access its daemon. Then, from repo root, build client and server inside Valve's Scout SDK:
+
+```sh
+./linux/build.sh debug
+./linux/build.sh release
+```
 
 ## People involved in development of the project
 - [ScriptedSnark](https://github.com/ScriptedSnark)

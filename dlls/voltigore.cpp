@@ -411,7 +411,7 @@ void CBabyVoltigore::RunTask( Task_t *pTask )
 void CBabyVoltigore::SetActivity( Activity activity )
 {
 	if ( activity == ACT_VICTORY_DANCE )
-		pev->health = min( pev->max_health, pev->health + 100.0f );
+		pev->health = V_min( pev->max_health, pev->health + 100.0f );
 
 	int sequence = LookupActivity( activity );
 
@@ -1166,7 +1166,7 @@ void CVoltigore::StartTask( Task_t *pTask )
 void CVoltigore::SetActivity( Activity activity )
 {
 	if ( activity == ACT_VICTORY_DANCE )
-		pev->health = min( pev->max_health, pev->health + 100.0f );
+		pev->health = V_min( pev->max_health, pev->health + 100.0f );
 
 	CBaseMonster::SetActivity( activity == ACT_SMALL_FLINCH ? ACT_MELEE_ATTACK1 : activity );
 }

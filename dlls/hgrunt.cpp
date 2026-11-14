@@ -145,7 +145,7 @@ public:
 	virtual float GetPointsForDamage( float flDamage )
 	{
 		//ScoreIncrement = (Damage / MonsterCustomHealth) * (MonstersDefaultScore * (MonstersCustomHealth / MonstersDefaultHealth) )
-		return min( 4, ( flDamage / pev->max_health ) * ( 4 * ( pev->max_health / sk_hgrunt_health.value ) ) );
+		return V_min( 4, ( flDamage / pev->max_health ) * ( 4 * ( pev->max_health / sk_hgrunt_health.value ) ) );
 	}
 
 	int ISoundMask ( void );

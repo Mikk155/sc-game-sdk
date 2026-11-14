@@ -856,7 +856,7 @@ BOOL COsprey :: HasDead( void )
 	int *count;
 
 	if ( m_iResupplyCount > 0 )
-		m_iResupplyCount = min( m_iResupplyCount, MAX_CARRY );
+		m_iResupplyCount = V_min( m_iResupplyCount, MAX_CARRY );
 
 	if ( !SelectGruntPool( grunts, origins, count ) )
 		return FALSE;

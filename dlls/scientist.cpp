@@ -1447,7 +1447,7 @@ void CDeadScientist :: Spawn( )
 	pev->effects		= 0;
 	pev->yaw_speed		= 8;
 
-	m_iPose = max( 0, min( m_iPose, (int) ARRAYSIZE( m_szPoses ) - 1 ) );
+	m_iPose = V_max( 0, V_min( m_iPose, (int) ARRAYSIZE( m_szPoses ) - 1 ) );
 
 	pev->sequence = LookupSequence( m_szPoses[m_iPose] );
 

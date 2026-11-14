@@ -1839,14 +1839,14 @@ void CBasePlayer::SendScoreInfoToOtherPlayer( edict_t *recipient, int classifica
 	float health = -128.0f;
 
 	if ( !( ( hideHUD & HIDEHUD_HEALTH ) && IsAlive() ) && relationship < R_NO )
-		health = IsAlive() ? max( 0.001f, pev->health ) : -1.0f;
+		health = IsAlive() ? V_max( 0.001f, pev->health ) : -1.0f;
 
 	WritePlayerScoreFloat( health );
 
 	float armor = -128.0f;
 
 	if ( !( hideHUD & HIDEHUD_ARMOR ) && relationship < R_NO )
-		armor = pev->weapons < 0 ? max( 0.0f, pev->armorvalue ) : -1.0f;
+		armor = pev->weapons < 0 ? V_max( 0.0f, pev->armorvalue ) : -1.0f;
 
 	WritePlayerScoreFloat( armor );
 	WRITE_BYTE( classification );
