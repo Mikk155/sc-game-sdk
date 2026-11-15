@@ -33,6 +33,7 @@
 #include	"func_break.h"
 #include	"gargantua.h"
 #include	"TypedEntityHandle.h"
+#include "CClassicMode.h"
 
 //=========================================================
 // Gargantua Monster
@@ -1176,7 +1177,7 @@ BOOL CGargantua::CheckMeleeAttack2( float flDot, float flDist )
 
 	CBaseEntity *pEnemy = m_hEnemy;
 
-	if ( pEnemy && pEnemy->pev->health < 50.0f && m_pSchedule != slFail )
+	if ( pEnemy && pEnemy->pev->health < 50.0f && m_pSchedule != slFail && !CClassicMode::GetInstance()->IsEnabled() )
 		return FALSE;
 
 	if ( !(flDot >= 0.8 && flDist > pev->scale * 80.0 ) && m_pSchedule != slFail )
@@ -1202,7 +1203,7 @@ BOOL CGargantua::CheckRangeAttack2( float flDot, float flDist )
 
 	CBaseEntity *enemy = m_hEnemy;
 
-	if ( !enemy || enemy->pev->health > 50 )
+	if ( !enemy || enemy->pev->health > 50 && !CClassicMode::GetInstance()->IsEnabled() )
 		return FALSE;
 
 	return enemy->pev->movetype != MOVETYPE_FLY
