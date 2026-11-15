@@ -35,6 +35,7 @@
 #include "soundent.h"
 #include "player.h"
 #include "pipewrench.h"
+#include "CClassicMode.h"
 
 extern cvar_t sk_turret_health;
 extern cvar_t sk_miniturret_health;
@@ -1640,6 +1641,9 @@ void StartSentryExplosion( Vector origin, float unused, float delay, int amount 
 
 void CSentry::CreateExplosion( void )
 {
+	if ( CClassicMode::GetInstance()->IsEnabled() )
+		return;
+
 	Vector position( 0, 0, 0 );
 	Vector angles( 0, 0, 0 );
 
